@@ -3,7 +3,8 @@ library(magrittr)
 library(purrr)
 library(tidyverse)
 library(rvest)
-library(DT)
+library(reactable)
+library(reactablefmtr)
 
 # list urls...they are divided into groups of 50. probably a better way to do this but here we are...it works...get over it
 urls <- 
@@ -67,8 +68,45 @@ rs_list %<>%
     album = gsub("&amp;", "&", album),
     description = gsub("&amp;", "&", description),
     description = gsub("&#8220;", '"', description),
-    description = gsub("&#8221;", '"', description))
-  
+    description = gsub("&#8221;", '"', description),
+    description = gsub("&#8217;", "'", description)) %>% 
+  arrange(rank)
+
 # write.csv(rs_list, 'rs_list.csv', fileEncoding="UTF-16", row.names = FALSE)
 
-datatable(rs_list)
+reactable(
+  rs_list,
+  
+  # theme
+  highlight = TRUE,
+  striped = TRUE,
+  height = 960,
+  theme = reactableTheme(
+    stripedColor ='#e6ffe6',
+    highlightColor = '#c79e9e',
+    style = list(fontFamily = 'Menlo')
+  ),
+  
+  # sorting and searching
+  defaultSorted = 'rank',
+  searchable = TRUE,
+  
+  # page options
+  showPageSizeOptions = TRUE, 
+  pageSizeOptions = c(10, 25, 50),
+  paginationType = "jump", 
+
+  # column options
+  columns = list(
+    rank = colDef(name = 'Rank', align = 'left', minWidth = 20),
+    artist = colDef(name = 'Artist', align = 'center', minWidth = 45),
+    album = colDef(name = 'Album', align = 'center', minWidth = 45),
+    label = colDef(name = 'Label', align = 'center', minWidth = 45),
+    year = colDef(name = 'Year', align = 'center', minWidth = 45),
+    description = colDef(name = 'Notes', align = 'left', minWidth = 300, sortable = FALSE)
+    )
+  ) %>% 
+  add_title('The 500 Greatest Albums of All Time...According to Rolling Stone (in 2020).',
+    align = 'left', font_family = 'Menlo', font_color = '#414141')
+
+
