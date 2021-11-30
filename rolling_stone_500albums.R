@@ -73,7 +73,7 @@ rs_list %<>%
     description = gsub("&#8216;", "'", description)) %>% 
   arrange(rank)
 
-saveRDS(rs_list, 'app/data/rs_list.RDS')
+saveRDS(rs_list, 'app_basic/data/rs_list.RDS')
 
 # write.csv(rs_list, 'rs_list.csv', fileEncoding="UTF-16", row.names = FALSE)
 

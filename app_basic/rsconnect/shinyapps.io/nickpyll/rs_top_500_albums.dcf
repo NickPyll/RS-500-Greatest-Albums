@@ -5,9 +5,9 @@ account: nickpyll
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5168403
-bundleId: 5272782
+bundleId: 5309430
 url: https://nickpyll.shinyapps.io/rs_top_500_albums/
-when: 1637377253.3397
-lastSyncTime: 1637377253.33971
+when: 1638274456.92613
+lastSyncTime: 1638274456.92614
 asMultiple: FALSE
 asStatic: FALSE
